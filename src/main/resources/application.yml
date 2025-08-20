@@ -77,8 +77,14 @@ app:
     interval: 3000           # ???? ?? (???)
     batch-size: 20          # ?? ??? ?? ??
 
-  # ??? URL ? (??)
+  # ??? URL ?
   animal-images:
+    - "https://wooly-images.com/1.jpg"
+    - "https://wooly-images.com/1.jpg"
+    - "https://wooly-images.com/1.jpg"
+    - "https://wooly-images.com/1.jpg"
+    - "https://wooly-images.com/1.jpg"
+    - "https://wooly-images.com/1.jpg"
     - "https://wooly-images.com/1.jpg"
 
 
@@ -119,7 +125,6 @@ spring:
   config:
     activate:
       on-profile: local
-
   # ?? ??? ??
   kafka:
     bootstrap-servers: localhost:9092
@@ -138,6 +143,11 @@ management:
       exposure:
         include: health,info,metrics
 
+# ?? ?????? animal-images ?? ??
 app:
   streaming:
     interval: 1000  # ????? ? ???
+  animal-images:
+    - "https://wooly-images.com/1.jpg"
+    - "https://wooly-images.com/1.jpg"
+    - "https://wooly-images.com/1.jpg"

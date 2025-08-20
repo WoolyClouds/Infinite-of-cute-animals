@@ -47,21 +47,21 @@ class RedisConfig {
         return template
     }
 
-    /**
-     * String 전용 Redis Template
-     * - 간단한 카운터, 플래그 등에 사용
-     */
-    @Bean
-    fun stringRedisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, String> {
-        val template = RedisTemplate<String, String>()
-        template.connectionFactory = connectionFactory
-
-        val stringSerializer = StringRedisSerializer()
-        template.keySerializer = stringSerializer
-        template.valueSerializer = stringSerializer
-        template.hashKeySerializer = stringSerializer
-        template.hashValueSerializer = stringSerializer
-
-        return template
-    }
+//    /**
+//     * String 전용 Redis Template
+//     * - 간단한 카운터, 플래그 등에 사용
+//     */
+//    @Bean
+//    fun stringRedisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, String> {
+//        val template = RedisTemplate<String, String>()
+//        template.connectionFactory = connectionFactory
+//
+//        val stringSerializer = StringRedisSerializer()
+//        template.keySerializer = stringSerializer
+//        template.valueSerializer = stringSerializer
+//        template.hashKeySerializer = stringSerializer
+//        template.hashValueSerializer = stringSerializer
+//
+//        return template
+//    }
 }
