@@ -1,11 +1,11 @@
-package com.example.demo
+package com.wooly.Infinite_of_cute_animals
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DemoApplication
+class InfiniteOfCuteAnimalsApplication
 
 fun main(args: Array<String>) {
-	runApplication<DemoApplication>(*args)
+	runApplication<InfiniteOfCuteAnimalsApplication>(*args)
 }

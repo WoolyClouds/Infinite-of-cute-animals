@@ -1,10 +1,10 @@
-package com.example.demo
+package com.wooly.Infinite_of_cute_animals
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class DemoApplicationTests {
+class InfiniteOfCuteAnimalsApplicationTests {
 
 	@Test
 	fun contextLoads() {

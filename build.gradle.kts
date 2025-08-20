@@ -5,9 +5,9 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "com.example"
+group = "com.wooly"
 version = "0.0.1-SNAPSHOT"
-description = "Demo project for Spring Boot"
+description = "Infinite of cute animals"
 
 java {
 	toolchain {
