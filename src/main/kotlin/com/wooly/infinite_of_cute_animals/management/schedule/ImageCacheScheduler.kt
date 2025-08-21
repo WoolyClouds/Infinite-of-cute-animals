@@ -22,7 +22,7 @@ class ImageCacheScheduler(
 
     companion object {
         private const val DAILY_CACHE_SIZE = 100
-        private const val MAX_IMAGE_SIZE_BYTES = 2_097_152 // 2MB 제한
+        private const val MAX_IMAGE_SIZE_BYTES = 20_971_520 // 20MB 제한
         private const val CACHE_TTL_HOURS = 25L // 25시간 (다음날 갱신 전까지 여유)
         private const val DAILY_IMAGES_KEY_PREFIX = "daily_images"
         private const val IMAGE_DATA_KEY_PREFIX = "image_data"

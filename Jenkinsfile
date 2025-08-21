@@ -73,7 +73,8 @@ pipeline {
 
                     # 새로운 애플리케이션 시작
                     echo "🔄 새로운 애플리케이션 시작 중..."
-                    systemctl restart infinite-animals > app.log
+                    echo "🔄 어플리케이션 시작 필요!!"
+                    #systemctl restart infinite-animals > app.log
 
                     # 실행 확인
                     sleep 15
