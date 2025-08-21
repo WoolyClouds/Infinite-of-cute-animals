@@ -1,5 +1,6 @@
 package com.wooly.infinite_of_cute_animals.management.service
 
+import com.wooly.infinite_of_cute_animals.management.constant.AnimalImageUrls
 import com.wooly.infinite_of_cute_animals.management.model.AnimalImageEvent
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
@@ -22,9 +23,6 @@ class ImageCacheService(
 
     @Value("\${app.cache.feed-max-size}")
     private var feedMaxSize: Long = 1000
-
-    @Value("\${app.animal-images}")
-    private lateinit var animalImageUrls: List<String>
 
     /**
      * 애플리케이션 시작 시 이미지 풀을 Redis에 초기화
@@ -49,7 +47,7 @@ class ImageCacheService(
      * 이미지 풀을 새로고침 (application.yml의 URL 목록 사용)
      */
     fun refreshImagePool() {
-        if (animalImageUrls.isEmpty()) {
+        if (AnimalImageUrls.IMAGE_URLS.isEmpty()) {
             logger.warn("⚠️ 설정된 동물 이미지 URL이 없습니다")
             return
         }
@@ -57,12 +55,12 @@ class ImageCacheService(
         try {
             // 기존 풀 삭제하고 새로 생성
             redisTemplate.delete(animalPoolKey)
-            redisTemplate.opsForList().rightPushAll(animalPoolKey, animalImageUrls)
+            redisTemplate.opsForList().rightPushAll(animalPoolKey, AnimalImageUrls.IMAGE_URLS)
 
             // 24시간 TTL 설정
             redisTemplate.expire(animalPoolKey, Duration.ofHours(24))
 
-            logger.info("✅ 동물 이미지 풀 갱신 완료: ${animalImageUrls.size}개")
+            logger.info("✅ 동물 이미지 풀 갱신 완료: ${AnimalImageUrls.IMAGE_URLS.size}개")
         } catch (e: Exception) {
             logger.error("❌ 이미지 풀 갱신 실패: ${e.message}")
         }
@@ -91,7 +89,7 @@ class ImageCacheService(
         } catch (e: Exception) {
             logger.error("❌ 랜덤 이미지 URL 조회 실패: ${e.message}")
             // Redis 실패 시 로컬 리스트에서 랜덤 반환
-            animalImageUrls.randomOrNull()
+            AnimalImageUrls.IMAGE_URLS.randomOrNull()
         }
     }
 
@@ -162,14 +160,14 @@ class ImageCacheService(
             mapOf(
                 "imagePoolSize" to (redisTemplate.opsForList().size(animalPoolKey) ?: 0L),
                 "feedSize" to getFeedSize(),
-                "configuredImages" to animalImageUrls.size,
+                "configuredImages" to AnimalImageUrls.IMAGE_URLS.size,
                 "isRedisConnected" to true
             )
         } catch (e: Exception) {
             mapOf(
                 "imagePoolSize" to 0L,
                 "feedSize" to 0L,
-                "configuredImages" to animalImageUrls.size,
+                "configuredImages" to AnimalImageUrls.IMAGE_URLS.size,
                 "isRedisConnected" to false,
                 "error" to e
             )

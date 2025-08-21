@@ -33,27 +33,43 @@ class FeedService(
             val startIndex = (page * size).toLong()
             val endIndex = startIndex + size - 1
 
-            // Redis에서 페이지네이션으로 피드 데이터 조회
             val feedData = redisTemplate.opsForList()
                 .range(feedKey, startIndex, endIndex)
                 ?: emptyList()
 
-            // AnimalImageEvent를 AnimalImage로 변환
             val animalImages = feedData.mapNotNull { data ->
                 try {
-                    if (data is AnimalImageEvent) {
-                        AnimalImage.from(data)
-                    } else {
-                        log.warn("⚠️ 예상하지 못한 데이터 타입: ${data::class.java}")
-                        null
+                    when (data) {
+                        is AnimalImageEvent -> {
+                            AnimalImage.from(data)
+                        }
+                        is LinkedHashMap<*, *> -> {
+                            // LinkedHashMap에서 필요한 데이터 추출
+                            val imageUrl = data["imageUrl"] as? String
+                            val id = data["id"] as? String
+
+                            if (imageUrl != null && id != null) {
+                                val event = AnimalImageEvent(
+                                    id = id,
+                                    imageUrl = imageUrl,
+                                )
+                                AnimalImage.from(event)
+                            } else {
+                                log.warn("⚠️ LinkedHashMap에서 필수 필드 누락: $data")
+                                null
+                            }
+                        }
+                        else -> {
+                            log.warn("⚠️ 예상하지 못한 데이터 타입: ${data::class.java}")
+                            null
+                        }
                     }
                 } catch (e: Exception) {
-                    log.error("🚨 데이터 변환 실패", e)
+                    log.error("🚨 데이터 변환 실패: $data", e)
                     null
                 }
             }
 
-            // 전체 피드 크기 조회
             val totalSize = redisTemplate.opsForList().size(feedKey) ?: 0L
             val hasNext = (startIndex + size) < totalSize
 

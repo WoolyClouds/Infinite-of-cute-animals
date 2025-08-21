@@ -1,21 +1,24 @@
 spring:
+  config:
+    activate:
+      on-profile: dev
   application:
     name: infinite-of-cute-animals
 
-  # Kafka ??
+  # Kafka config
   kafka:
     bootstrap-servers: 10.0.1.134:9092,10.0.1.139:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        # Producer ?? ???
-        acks: "1"  # ?? ???? ??
+        # Producer
+        acks: "1"
         retries: 3
         batch.size: 16384
         linger.ms: 5
         buffer.memory: 33554432
-        # JSON ??? ??
+        # JSON
         spring.json.add.type.headers: false
     consumer:
       group-id: animal-feed-service
@@ -25,15 +28,15 @@ spring:
       enable-auto-commit: true
       auto-commit-interval: 1000
       properties:
-        # Consumer ??? ??
+        # Consumer
         session.timeout.ms: 30000
         heartbeat.interval.ms: 3000
-        # JSON ???? ?? ???
+        # JSON
         spring.json.trusted.packages: "com.wooly.infinite_of_cute_animals"
         spring.json.use.type.headers: false
         spring.json.value.default.type: "com.wooly.infinite_of_cute_animals"
 
-  # Redis ??
+  # Redis
   data:
     redis:
       host: 10.0.1.207
@@ -41,15 +44,15 @@ spring:
       database: 0
       lettuce:
         pool:
-          max-active: 8    # ?? ?? ??
-          max-idle: 8      # ?? ?? ??
-          min-idle: 2      # ?? ?? ??
-          max-wait: -1ms   # ?? ?? ??
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: -1ms
         shutdown-timeout: 100ms
-      # Redis ?? ?? ? ???
+      # Redis
       timeout: 3000ms
 
-# ?? ??
+# server default
 server:
   port: 8888
   servlet:
@@ -58,37 +61,24 @@ server:
     max-threads: 200
     min-spare-threads: 10
 
-# ?????? ??? ??
+# app properties
 app:
   cache:
     animal-pool-key: "animal-image-pool"
     animal-feed-key: "animal-feed"
     stats-key-prefix: "stats"
-    animal-pool-ttl: 24h        # ??? ? ?? ?? ??
-    feed-max-size: 1000      # ?? ?? ?? ??
-    stats-retention: 7d      # ?? ??? ?? ??
-
+    animal-pool-ttl: 24h
+    feed-max-size: 1000
+    stats-retention: 7d
   kafka:
     topics:
       animal-stream: "animal-images-stream"
       animal-reactions: "animal-reactions"
-
   streaming:
-    interval: 3000           # ???? ?? (???)
-    batch-size: 20          # ?? ??? ?? ??
+    interval: 3000
+    batch-size: 20
 
-  # ??? URL ?
-  animal-images:
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
-
-
-# ?? ??
+# logging
 logging:
   level:
     com.example.animalfeed: DEBUG
@@ -103,7 +93,7 @@ logging:
     max-size: 10MB
     max-history: 30
 
-# Spring Boot Actuator ?? (????)
+# Spring Boot Actuator
 management:
   endpoints:
     web:
@@ -119,13 +109,12 @@ management:
       export:
         enabled: true
 
-# ?? ??? ????
+# local
 ---
 spring:
   config:
     activate:
       on-profile: local
-  # ?? ??? ??
   kafka:
     bootstrap-servers: localhost:9092
   data:
@@ -133,7 +122,6 @@ spring:
       host: localhost
       port: 6379
 
-# ????? Redis ???? ????
 management:
   health:
     redis:
@@ -143,11 +131,6 @@ management:
       exposure:
         include: health,info,metrics
 
-# ?? ?????? animal-images ?? ??
 app:
   streaming:
-    interval: 1000  # ????? ? ???
-  animal-images:
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
-    - "https://wooly-images.com/1.jpg"
+    interval: 1000

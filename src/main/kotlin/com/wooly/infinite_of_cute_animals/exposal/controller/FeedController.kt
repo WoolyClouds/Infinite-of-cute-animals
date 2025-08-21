@@ -3,16 +3,27 @@ package com.wooly.infinite_of_cute_animals.exposal.controller
 import com.wooly.infinite_of_cute_animals.exposal.model.AnimalFeedResponse
 import com.wooly.infinite_of_cute_animals.exposal.service.FeedService
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.net.URI
 
 @RestController
 @CrossOrigin(origins = ["*"]) // CORS 설정 (필요시 특정 도메인으로 제한)
 class FeedController(
     private val feedService: FeedService
 ) {
-
     private val log = LoggerFactory.getLogger(FeedController::class.java)
+
+    /**
+     * 루트 경로 - 메인 피드 페이지로 리다이렉트
+     */
+    @GetMapping("/")
+    fun index(): ResponseEntity<Void> {
+        return ResponseEntity.status(HttpStatus.FOUND)
+            .location(URI.create("/index.html"))
+            .build()
+    }
 
     /**
      * 무한 스크롤 동물 피드 조회
@@ -24,7 +35,7 @@ class FeedController(
     @GetMapping("/feed")
     fun getAnimalFeed(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
+        @RequestParam(defaultValue = "5") size: Int
     ): ResponseEntity<AnimalFeedResponse> {
         log.debug("🐾 동물 피드 요청 - 페이지: $page, 크기: $size")
 
