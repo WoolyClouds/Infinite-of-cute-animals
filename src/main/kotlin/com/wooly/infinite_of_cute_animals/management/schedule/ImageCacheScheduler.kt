@@ -10,8 +10,6 @@ import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.time.Duration
 import java.time.LocalDate
-import java.util.*
-import javax.imageio.ImageIO
 import kotlin.random.Random
 
 @Component
@@ -21,7 +19,7 @@ class ImageCacheScheduler(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     companion object {
-        private const val DAILY_CACHE_SIZE = 100
+        private const val DAILY_CACHE_SIZE = 50
         private const val MAX_IMAGE_SIZE_BYTES = 20_971_520 // 20MB 제한
         private const val CACHE_TTL_HOURS = 25L // 25시간 (다음날 갱신 전까지 여유)
         private const val DAILY_IMAGES_KEY_PREFIX = "daily_images"
@@ -40,7 +38,7 @@ class ImageCacheScheduler(
             // 1. 어제 캐시 정리
             clearPreviousDayCache()
 
-            // 2. 오늘의 랜덤 100개 선택 (날짜 기반 시드로 동일한 결과 보장)
+            // 2. 오늘의 랜덤 n개 선택 (날짜 기반 시드로 동일한 결과 보장)
             val todaySelectedUrls = selectTodayImages(today)
             logger.info("📋 오늘 선택된 이미지: ${todaySelectedUrls.size}개")
 
@@ -76,7 +74,7 @@ class ImageCacheScheduler(
     }
 
     /**
-     * 날짜를 시드로 사용하여 매일 동일한 100개 이미지 선택
+     * 날짜를 시드로 사용하여 매일 동일한 n개 이미지 선택
      */
     private fun selectTodayImages(date: String): List<String> {
         val seed = date.hashCode().toLong()
