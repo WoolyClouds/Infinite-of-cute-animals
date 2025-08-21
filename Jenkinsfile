@@ -43,8 +43,8 @@ pipeline {
                         echo "✅ 기존 JAR 파일 백업 완료"
                     fi
 
-                    # 새로운 JAR 복사
-                    cp build/libs/*.jar ${DEPLOY_PATH}/${APP_NAME}.jar
+                    # 새로운 JAR 복사 (SNAPSHOT 버전만)
+                    cp build/libs/*-SNAPSHOT.jar ${DEPLOY_PATH}/${APP_NAME}.jar
                     echo "✅ 새로운 JAR 파일 배포 준비 완료"
                 '''
             }
