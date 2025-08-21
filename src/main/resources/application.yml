@@ -4,6 +4,11 @@ spring:
       on-profile: dev
   application:
     name: infinite-of-cute-animals
+  task:
+    scheduling:
+      enabled: true
+      pool:
+        size: 2
 
   # Kafka config
   kafka:
