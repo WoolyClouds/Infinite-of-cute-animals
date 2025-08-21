@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         APP_NAME = 'infinite-of-cute-animals'
-        DEPLOY_PATH = '/shared/app'  # Jenkins 컨테이너 내부 경로
-        HOST_DEPLOY_PATH = '/home/ec2-user/app'  # 호스트 실제 경로
+        DEPLOY_PATH = '/shared/app'
+        HOST_DEPLOY_PATH = '/home/ec2-user/app'
     }
 
     stages {
