@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         APP_NAME = 'infinite-of-cute-animals'
-        DEPLOY_PATH = '/home/ec2-user/app'
+        DEPLOY_PATH = '/shared/app'
     }
 
     stages {
