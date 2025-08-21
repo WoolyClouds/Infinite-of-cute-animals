@@ -72,7 +72,7 @@ pipeline {
 
                     # 새로운 애플리케이션 시작
                     echo "🔄 새로운 애플리케이션 시작 중..."
-                    nohup java -jar -Dspring.profiles.active=dev ${APP_NAME}.jar > app.log 2>&1 &
+                    nohup java -jar ${APP_NAME}.jar --spring.profiles.active=dev > app.log 2>&1 &
 
                     # 실행 확인
                     sleep 15
