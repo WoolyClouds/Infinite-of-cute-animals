@@ -78,7 +78,7 @@ pipeline {
                     sleep 15
                     if pgrep -f "${APP_NAME}.jar"; then
                         echo "✅ 애플리케이션이 성공적으로 시작되었습니다!"
-                        echo "🌐 접속 주소: http://10.0.1.207:8888"
+                        echo "🌐 접속 주소: http://43.202.174.81:8888/"
                     else
                         echo "❌ 애플리케이션 시작 실패"
                         echo "📋 로그 확인:"
