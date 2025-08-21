@@ -19,7 +19,7 @@ class FeedService(
     private lateinit var feedKey: String
 
     @Value("\${app.streaming.batch-size}")
-    private var defaultBatchSize: Int = 20
+    private var defaultBatchSize: Int = 10
 
 
     /**

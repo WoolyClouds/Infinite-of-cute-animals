@@ -29,13 +29,13 @@ class FeedController(
      * 무한 스크롤 동물 피드 조회
      *
      * @param page 페이지 번호 (0부터 시작)
-     * @param size 페이지 크기 (기본값: 20)
+     * @param size 페이지 크기 (기본값: 5)
      * @return 동물 이미지 리스트와 페이지 정보
      */
     @GetMapping("/feed")
     fun getAnimalFeed(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "5") size: Int
+        @RequestParam(defaultValue = "10") size: Int
     ): ResponseEntity<AnimalFeedResponse> {
         log.debug("🐾 동물 피드 요청 - 페이지: $page, 크기: $size")
 
